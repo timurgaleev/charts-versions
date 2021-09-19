@@ -1,0 +1,25 @@
+name: Build-Cron
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Check Versions
+        run: |
+          bash ./check.sh
+
+      - name: Commit & Push
+        uses: timzu/act-build@master
+        with:
+          args: --commit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MESSAGE_PATH: ./target/commit_message
