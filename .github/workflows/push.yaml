@@ -15,7 +15,7 @@ jobs:
 
       - name: Report
         run: |
-          bash ./report.sh
+          bash ./check.sh
 
       - name: Commit & Push
         uses: timzu/act-build@master
