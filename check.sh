@@ -59,10 +59,6 @@ _get_version() {
         return
     fi
 
-    if [ -z "${SLACK_TOKEN}" ]; then
-        return
-    fi
-
     echo
 }
 
