@@ -23,10 +23,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MESSAGE_PATH: ./target/commit_message.txt
-          
-      - name: Release
-        uses: timzu/act-build@master
-        with:
-          args: --release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
