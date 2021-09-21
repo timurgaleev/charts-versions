@@ -22,4 +22,4 @@ jobs:
           args: --commit
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE_PATH: ./target/commit_message
+          MESSAGE_PATH: ./target/commit_message.txt
