@@ -1,13 +1,36 @@
 #!/bin/bash
 
+USERNAME=${GITHUB_ACTOR}
+REPONAME=$(echo "${REPOSITORY}" | cut -d'/' -f2)
+
 SHELL_DIR=$(dirname $0)
 
 REPOSITORY="timurgaleev/charts-versions"
 
-USERNAME=${GITHUB_ACTOR}
-REPONAME=$(echo "${REPOSITORY}" | cut -d'/' -f2)
-
 CHARTS=${SHELL_DIR}/target/charts.txt
+
+_verify_version() {
+    CHART="$1"
+    # CHART_URL="$2"
+
+    REPO="$(echo ${CHART} | cut -d'/' -f1)"
+    NAME="$(echo ${CHART} | cut -d'/' -f2)"
+
+    touch ${SHELL_DIR}/versions/${NAME}
+    NOW="$(cat ${SHELL_DIR}/versions/${NAME} | xargs)"
+
+    NEW="$(cat ${CHARTS} | grep "\"${CHART}\"" | awk '{print $2" ("$3")"}' | xargs)"
+
+    printf '# %-50s %-20s %-20s\n' "${CHART}" "${NOW}" "${NEW}"
+
+    printf "${NEW}" > ${SHELL_DIR}/versions/${NAME}
+
+    if [ "${NOW}" == "${NEW}" ]; then
+        return
+    fi
+
+    echo
+}
 
 _init() {
     rm -rf ${SHELL_DIR}/target
@@ -33,32 +56,10 @@ _load() {
 _check() {
     printf '# %-50s %-20s %-20s\n' "NAME" "NOW" "NEW"
 
-    # check versions
+    # verify versions
     while read VAR; do
-        _get_version ${VAR}
+        _verify_version ${VAR}
     done < ${SHELL_DIR}/checklist.txt
-    echo
-}
-
-_get_version() {
-    CHART="$1"
-
-    REPO="$(echo ${CHART} | cut -d'/' -f1)"
-    NAME="$(echo ${CHART} | cut -d'/' -f2)"
-
-    touch ${SHELL_DIR}/versions/${NAME}
-    NOW="$(cat ${SHELL_DIR}/versions/${NAME} | xargs)"
-
-    NEW="$(cat ${CHARTS} | grep "\"${CHART}\"" | awk '{print $2" ("$3")"}' | xargs)"
-
-    printf '# %-50s %-20s %-20s\n' "${CHART}" "${NOW}" "${NEW}"
-
-    printf "${NEW}" > ${SHELL_DIR}/versions/${NAME}
-
-    if [ "${NOW}" == "${NEW}" ]; then
-        return
-    fi
-
     echo
 }
 
