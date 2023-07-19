@@ -13,6 +13,7 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Check Versions
+        uses: timzu/github-actions-build@master
         run: |
           bash ./check.sh
 
