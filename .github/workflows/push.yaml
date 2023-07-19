@@ -1,9 +1,9 @@
-name: Build-Push
+name: cron-push
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
           bash ./check.sh
 
       - name: Commit & Push
-        uses: timzu/act-build@master
+        uses: timzu/github-actions-build@master
         with:
           args: --commit
         env:
@@ -26,7 +26,7 @@ jobs:
           MESSAGE_PATH: ./target/message.txt
 
       - name: Release
-        uses: timzu/act-build@master
+        uses: timzu/github-actions-build@master
         with:
           args: --release
         env:

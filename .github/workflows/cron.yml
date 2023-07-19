@@ -1,8 +1,8 @@
-name: Build-Cron
+name: cron-build
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/60 * * * *"
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
           bash ./check.sh
 
       - name: Commit & Push
-        uses: timzu/act-build@master
+        uses: timzu/github-actions-build@master
         with:
           args: --commit
         env:
