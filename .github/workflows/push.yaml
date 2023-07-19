@@ -11,11 +11,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
 
       - name: Check
         run: |
           bash ./check.sh
+          bash  "git config --global --add safe.directory /github/workspace"
 
       - name: Commit & Push
         uses: timzu/github-actions-build@master
