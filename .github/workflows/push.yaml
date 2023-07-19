@@ -13,9 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Container
-        uses: timzu/docker-builder@master
-
       - name: Check
         run: |
           bash ./check.sh
