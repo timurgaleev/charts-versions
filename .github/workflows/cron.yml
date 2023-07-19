@@ -12,9 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Container
-        uses: timzu/github-actions-build@master
-
       - name: Check Versions
         run: |
           bash ./check.sh
