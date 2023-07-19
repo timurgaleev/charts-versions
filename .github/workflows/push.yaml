@@ -13,8 +13,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Report
+      - name: Container
         uses: timzu/github-actions-build@master
+
+      - name: Check
         run: |
           bash ./check.sh
 
